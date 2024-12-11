@@ -1,16 +1,16 @@
 "use client"
 
-import { type ColumnDef } from "@tanstack/react-table"
+// import { type ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
+// export type Payment = {
+//     id: string
+//     amount: string
+//     status: "Applications Sent" | "Offers Received" | "Declined" | "Interviews"
+//     email: string
+// }
 
 import { Checkbox } from "~/components/ui/checkbox"
 
@@ -27,7 +27,7 @@ import {
 } from "~/components/ui/dropdown-menu"
 
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns = [
     {
         id: "select",
         header: ({ table }) => (
@@ -55,30 +55,29 @@ export const columns: ColumnDef<Payment>[] = [
         header: "Status",
     },
     {
-        accessorKey: "email",
+        accessorKey: "company",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Email
+                    Company
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
     {
-        accessorKey: "amount",
-        header: () => <div className="text-right">Amount</div>,
-        cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"))
-            const formatted = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-            }).format(amount)
-
-            return <div className="text-right font-medium">{formatted}</div>
+        accessorKey: "link",
+        header: () => {
+            return (
+                <Button
+                    variant="ghost"
+                >
+                    Link
+                </Button>
+            )
         },
     },
     {
@@ -99,11 +98,10 @@ export const columns: ColumnDef<Payment>[] = [
                         <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(payment.id)}
                         >
-                            Copy payment ID
+                            Copy work ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+                        <DropdownMenuItem>View work details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
